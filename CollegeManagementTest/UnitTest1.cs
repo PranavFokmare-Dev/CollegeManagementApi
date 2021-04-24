@@ -14,6 +14,7 @@ namespace CollegeManagementTest.Tests
         [TestMethod]
         public async Task TestMethod1()
         {
+
             //arrange
             var mockStudentRepo = new Mock<IStudentRepository>();
             mockStudentRepo.Setup(r => r.GetStudents()).Returns(Task.FromResult<IEnumerable<Student>>(new List<Student>()));
@@ -28,7 +29,8 @@ namespace CollegeManagementTest.Tests
 
         [TestMethod]
         public async Task Test()
-        {            //arrange
+        {   
+            //arrange
             var mockStudentRepo = new Mock<IStudentRepository>();
             mockStudentRepo.Setup(r => r.GetStudents()).Returns(Task.FromResult<IEnumerable<Student>>(new List<Student>()));
             var controller = new StudentsController(mockStudentRepo.Object);

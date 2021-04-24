@@ -31,7 +31,7 @@ namespace CollegeManagementApi
         {
 
             services.AddDbContext<CollegeManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) ;
             services.AddTransient<IMyLogger, MyLogger>();
             services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddScoped<LogNormalActionFilter>();

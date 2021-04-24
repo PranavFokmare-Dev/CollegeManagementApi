@@ -20,9 +20,10 @@ namespace CollegeManagementApi.Controllers
             this._repo = _repo;
         }
 
-        [ServiceFilter(typeof(LogNormalActionFilter))]
+        //[ServiceFilter(typeof(LogNormalActionFilter))]
         public async Task<IEnumerable<Student>> GetStudents()
         {
+            
             return await _repo.GetStudents();
         }
 

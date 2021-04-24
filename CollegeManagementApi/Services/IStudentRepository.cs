@@ -21,7 +21,7 @@ namespace CollegeManagementApi.Services
         }
         public async Task<IEnumerable<Student>> GetStudents()
         {
-            return await _context.Students.ToListAsync();
+            return await _context.Students.Include(p=>p.Degree).Include(p=>p.School).ToListAsync();
         }
     }
 }
