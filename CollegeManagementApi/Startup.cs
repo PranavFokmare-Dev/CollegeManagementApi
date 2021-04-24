@@ -30,11 +30,12 @@ namespace CollegeManagementApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<CollegeManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) ;
-            services.AddTransient<IMyLogger, MyLogger>();
-            services.AddTransient<IStudentRepository, StudentRepository>();
+            services.AddScoped<IMyLogger, MyLogger>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<LogNormalActionFilter>();
+            services.AddDbContext<CollegeManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CollegeManagementApi", Version = "v1" });
