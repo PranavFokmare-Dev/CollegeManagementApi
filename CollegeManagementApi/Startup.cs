@@ -42,6 +42,7 @@ namespace CollegeManagementApi
 
             //Repositories
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
             services.AddScoped<IRegisterRepository, RegisterRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
