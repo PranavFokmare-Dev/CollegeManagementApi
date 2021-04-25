@@ -32,9 +32,21 @@ namespace CollegeManagementApi
 
             
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) ;
+            
+            //My Services
             services.AddScoped<IMyLogger, MyLogger>();
-            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IExistenceChecker, ExistenceChecker>();
+
+            //Filters
             services.AddScoped<LogNormalActionFilter>();
+
+            //Repositories
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IRegisterRepository, RegisterRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            
+            
             services.AddDbContext<CollegeManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
             services.AddSwaggerGen(c =>
             {

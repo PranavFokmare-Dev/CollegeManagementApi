@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
 #nullable disable
 
 namespace CollegeManagementApi.Models
@@ -16,6 +15,7 @@ namespace CollegeManagementApi.Models
             : base(options)
         {
         }
+
 
         public virtual DbSet<AssignmentUpload> AssignmentUploads { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
