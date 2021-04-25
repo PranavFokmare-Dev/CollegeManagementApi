@@ -44,8 +44,8 @@ namespace CollegeManagementApi.Services
             int totalSessions = attendanceList.Count();
             if (totalSessions == 0)
                 return 0;
-            int presentSessions = attendanceList.Count();
-            double AttendancePercentage = (double)(presentSessions) / totalSessions;
+            int presentSessions = attendanceList.Count(a =>a.Status=="P ");
+            double AttendancePercentage = 100 * (double)(presentSessions) / totalSessions;
             return AttendancePercentage;
         }
     }
