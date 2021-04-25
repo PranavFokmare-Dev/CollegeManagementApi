@@ -50,6 +50,8 @@ namespace CollegeManagementApi.Controllers
                 string errorMessage = $"Check if student id ({sid}) and taughtby id ({taughtby_id}) are correct";
                 return BadRequest(errorMessage);
             }
+            if (await checker.RegisterExists(sid, taughtby_id))
+                return Ok("Student already registered that course");
             await _repo.StudentEnrollCourse(sid, taughtby_id);
             return Ok($"Student with student id: {sid} enrolled in taught by id: {taughtby_id} ");
         }
@@ -58,7 +60,7 @@ namespace CollegeManagementApi.Controllers
         public async Task<ActionResult<ProjectMark>> GetMarks(int regid)
         {
             if(! await checker.RegisterExists(regid))
-                return NotFound($"no souch registeration of course exists {regid}");
+                return NotFound($"no such registeration of course exists {regid}");
             return Ok(await _repo.GetProjectMarks(regid));
         }
     }
