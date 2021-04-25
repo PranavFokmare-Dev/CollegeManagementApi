@@ -15,6 +15,7 @@ namespace CollegeManagementApi.Services
         Task<bool> RegisterExists(int sid, int tbyid);
         Task<bool> TaughtByExists(int id);
         Task<bool> AttendanceExists(int id);
+        Task<bool> ProjectMarksExists(int regid);
     }
     public class ExistenceChecker : IExistenceChecker
     {
@@ -51,6 +52,10 @@ namespace CollegeManagementApi.Services
         public async Task<bool> AttendanceExists(int id)
         {
             return await _context.Attendances.AnyAsync(a => a.RegisterdId == id);
+        }
+        public async Task<bool> ProjectMarksExists(int regid)
+        {
+            return await _context.ProjectMarks.AnyAsync(pm => pm.RegisterdId == regid);
         }
     }
 }
