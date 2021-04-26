@@ -23,8 +23,11 @@ namespace CollegeManagementApi.Models
         public short? YearOfJoining { get; set; }
         [DataMember]
         public DateTime? DateOfBirth { get; set; }
+        [DataMember]
         public int? ProctorId { get; set; }
+        [DataMember]
         public int? DegreeId { get; set; }
+        [DataMember]
         public int? SchoolId { get; set; }
         [DataMember]
         public string ImagePath { get; set; }
