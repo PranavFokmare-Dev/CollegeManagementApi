@@ -63,6 +63,18 @@ namespace CollegeManagementApi.Controllers
             return CreatedAtAction("GetCourseById", new { cid = course.CourseId }, course);
         }
 
+        [HttpPut("Update/{courseId}")]
+        public async Task<ActionResult<CourseDTO>> UpdateCourse( int courseId,Course course)
+        {
+            if(!ModelState.IsValid || ! await checker.CourseExists(courseId) || courseId != course.CourseId)
+            {
+                return BadRequest();
+            }
+            await _repo.UpdateCourse(course);
+            return RedirectToAction("GetCourseById",new { cid = course.CourseId });
+        }
+
+
 
     }
 }
