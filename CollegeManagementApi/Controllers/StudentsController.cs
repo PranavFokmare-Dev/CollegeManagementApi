@@ -35,6 +35,10 @@ namespace CollegeManagementApi.Controllers
                 return BadRequest();
             if (await _repo.AddStudent(s))
             {
+                //Add Student => The entity framework updates the student id for Student s.
+                //As this Student s was already in the cache it updated it
+                //To see this effect Add breakpoints before and after the _repo.AddStudent(s)
+                //Thats why in the CreatedAtAction we can use s.StudentId 
                 return CreatedAtAction("GetStudentById", new { id = s.StudentId }, s);
             }
             else
