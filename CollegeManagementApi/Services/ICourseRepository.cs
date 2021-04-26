@@ -14,6 +14,7 @@ namespace CollegeManagementApi.Services
         Task<IEnumerable<TaughtByDTO>> GetTeachersByCourseId(int cid);
 
         Task<CourseDTO> GetCourseById(int cid);
+        Task AddCourse(Course course);
     }
     public class CourseRepository : ICourseRepository
     {
@@ -42,6 +43,11 @@ namespace CollegeManagementApi.Services
         {
             Course course = await context.Courses.FindAsync(cid);
             return new CourseDTO(course);
+        }
+        public async Task AddCourse(Course course)
+        {
+            await context.Courses.AddAsync(course);
+            await context.SaveChangesAsync();
         }
     }
 }

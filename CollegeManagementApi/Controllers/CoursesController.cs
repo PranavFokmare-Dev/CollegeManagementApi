@@ -1,4 +1,5 @@
-﻿using CollegeManagementApi.Models.DTO;
+﻿using CollegeManagementApi.Models;
+using CollegeManagementApi.Models.DTO;
 using CollegeManagementApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,17 @@ namespace CollegeManagementApi.Controllers
             return Ok(taughtbyDTOs);
         }
 
-
+        [HttpPost("Add")]
+        public async Task<ActionResult<CourseDTO>> AddCourse(Course course)
+        {
+            if(await checker.CourseExists(course.CourseName))
+            {
+                var response = new { message = "Course already exists", course = course };
+                return Ok(response);
+            }
+            await _repo.AddCourse(course);
+            return CreatedAtAction("GetCourseById", new { cid = course.CourseId }, course);
+        }
 
 
     }

@@ -10,6 +10,7 @@ namespace CollegeManagementApi.Services
     {
         Task<bool> StudentExists(int id);
         Task<bool> CourseExists(int id);
+        Task<bool> CourseExists(string CourseName);
         Task<bool> TeacherExists(int id);
         Task<bool> RegisterExists(int id);
         Task<bool> RegisterExists(int sid, int tbyid);
@@ -37,6 +38,11 @@ namespace CollegeManagementApi.Services
         {
             return await _context.Courses.AnyAsync(c => c.CourseId == id);
         }
+        public async Task<bool> CourseExists(string CourseName)
+        {
+            return await _context.Courses.AnyAsync(c => c.CourseName == CourseName);
+        }
+
         public async Task<bool> RegisterExists(int id)
         {
             return await _context.Registerds.AnyAsync(r => r.RegisterdId == id);
