@@ -28,6 +28,17 @@ namespace CollegeManagementApi.Controllers
             return Ok(await _repo.GetCourses());
         }
 
+        [HttpGet("{cid}")]
+        public async Task<ActionResult<CourseDTO>> GetCourseById(int cid)
+        {
+            if(!await checker.CourseExists(cid))
+            {
+                return NotFound($"No Such Course Exists with Course ID {cid}");
+            }
+            CourseDTO courseDTO = await _repo.GetCourseById(cid);
+            return Ok(courseDTO);
+        }
+
         [HttpGet("{cid}/Teachers")]
         public async Task<ActionResult<TaughtByDTO>> GetTeachersByCourseId(int cid)
         {
@@ -38,6 +49,9 @@ namespace CollegeManagementApi.Controllers
             IEnumerable<TaughtByDTO> taughtbyDTOs=await _repo.GetTeachersByCourseId(cid);
             return Ok(taughtbyDTOs);
         }
+
+
+
 
     }
 }
