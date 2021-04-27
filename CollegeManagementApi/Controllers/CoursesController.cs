@@ -74,7 +74,21 @@ namespace CollegeManagementApi.Controllers
             return RedirectToAction("GetCourseById",new { cid = course.CourseId });
         }
 
-
+        [HttpDelete("Delete/{courseId}")]
+        public async Task<ActionResult> DeleteCourse(int courseId)
+        {
+            if (!await checker.CourseExists(courseId))
+                return NotFound($"Course with the course id {courseId} doesnt exist");
+            try
+            {
+                await _repo.DeleteCourse(courseId);
+            }
+            catch(Microsoft.EntityFrameworkCore.DbUpdateException e)
+            {
+                return BadRequest($"Cant Delete The course, its used by other entities occured");
+            }
+            return Ok($"Course with course id {courseId} deleted");
+        }
 
     }
 }

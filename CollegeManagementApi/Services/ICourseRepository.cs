@@ -16,6 +16,7 @@ namespace CollegeManagementApi.Services
         Task<CourseDTO> GetCourseById(int cid);
         Task AddCourse(Course course);
         Task UpdateCourse(Course course);
+        Task DeleteCourse(int courseId);
     }
     public class CourseRepository : ICourseRepository
     {
@@ -54,6 +55,12 @@ namespace CollegeManagementApi.Services
         {
 
             context.Entry(course).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+        }
+        public async Task DeleteCourse(int courseId)
+        {
+            Course course = await context.Courses.FindAsync(courseId);
+            context.Courses.Remove(course);
             await context.SaveChangesAsync();
         }
     }
