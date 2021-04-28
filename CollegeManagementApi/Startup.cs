@@ -19,6 +19,7 @@ namespace CollegeManagementApi
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,7 +31,16 @@ namespace CollegeManagementApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            
+
+            //CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyCor", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+                });
+            });
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) ;
             
             //My Services
@@ -49,6 +59,7 @@ namespace CollegeManagementApi
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<ISchoolRepository, SchoolRepository>();
+            services.AddScoped<IDegreeRepository, DegreeRepository>();
 
 
             services.AddDbContext<CollegeManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
@@ -69,6 +80,8 @@ namespace CollegeManagementApi
             }
 
             app.UseRouting();
+
+            app.UseCors("MyCor");
 
             app.UseAuthorization();
 
