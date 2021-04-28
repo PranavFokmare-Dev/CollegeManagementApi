@@ -48,8 +48,9 @@ namespace CollegeManagementApi
             services.AddScoped<IRegisterRepository, RegisterRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-            
-            
+            services.AddScoped<ISchoolRepository, SchoolRepository>();
+
+
             services.AddDbContext<CollegeManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
             services.AddSwaggerGen(c =>
             {

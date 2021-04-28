@@ -36,7 +36,7 @@ namespace CollegeManagementApi.Models
     
         public virtual ICollection<School> SchoolDeans { get; set; }
         public virtual ICollection<School> SchoolHods { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<TaughtBy> TaughtBies { get; set; }
+        public virtual ICollection<Student> Students { get; set; }  //Proctees
+        public virtual ICollection<TaughtBy> TaughtBies { get; set; }   //Courses
     }
 }

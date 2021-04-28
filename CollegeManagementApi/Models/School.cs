@@ -27,6 +27,8 @@ namespace CollegeManagementApi.Models
         public virtual Teacher Dean { get; set; }
         [DataMember]
         public virtual Teacher Hod { get; set; }
+
+
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<Teacher> Teachers { get; set; }
         public override bool Equals(object obj)
