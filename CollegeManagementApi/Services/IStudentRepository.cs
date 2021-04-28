@@ -99,7 +99,6 @@ namespace CollegeManagementApi.Services
             _context.Entry(student).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-
         }
 
 
