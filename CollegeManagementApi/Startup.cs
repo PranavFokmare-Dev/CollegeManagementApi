@@ -35,6 +35,8 @@ namespace CollegeManagementApi
             
             //My Services
             services.AddScoped<IMyLogger, MyLogger>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<IExistenceChecker, ExistenceChecker>();
 
             //Filters
