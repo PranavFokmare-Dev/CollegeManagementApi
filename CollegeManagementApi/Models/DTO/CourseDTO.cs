@@ -16,12 +16,16 @@ namespace CollegeManagementApi.Models.DTO
 
         public CourseDTO(Course course)
         {
-            this.CourseId = course.CourseId;
-            this.CourseName = course.CourseName;
-            this.CourseStatus = course.CourseStatus;
-            this.CourseType = course.CourseType;
-            this.Credits = course.Credits;
-            this.SyllabusPath = course.SyllabusPath;
+            if (course != null)
+            {
+                this.CourseId = course.CourseId;
+                this.CourseName = course.CourseName;
+                this.CourseStatus = course.CourseStatus;
+                this.CourseType = course.CourseType;
+                this.Credits = course.Credits;
+                this.SyllabusPath = course.SyllabusPath;
+            }
+           
         }
 
         public CourseDTO()

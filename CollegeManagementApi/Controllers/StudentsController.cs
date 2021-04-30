@@ -1,6 +1,8 @@
 ﻿using CollegeManagementApi.Filter;
 using CollegeManagementApi.Models;
+using CollegeManagementApi.Models.DTO;
 using CollegeManagementApi.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace CollegeManagementApi.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
@@ -22,9 +25,11 @@ namespace CollegeManagementApi.Controllers
 
         //[ServiceFilter(typeof(LogNormalActionFilter))]
         // api/Students
-        public async Task<IEnumerable<Student>> GetStudents()
+        public async Task<IEnumerable<StudentDTO>> GetStudents()
         {
-            return await _repo.GetStudents();
+            IEnumerable<Student> students=await _repo.GetStudents();
+            IEnumerable<StudentDTO> studentDTOs = students.Select(s => new StudentDTO(s));
+            return studentDTOs;
         }
 
         // api/Students/Add
@@ -49,15 +54,19 @@ namespace CollegeManagementApi.Controllers
 
         // api/students/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> GetStudentById(int id)
+        public async Task<ActionResult<StudentDTO>> GetStudentById(int id)
         {
             Student s = await _repo.GetStudentById(id);
             if (s == null)
                 return NotFound();
-            return s;
+            StudentDTO sDTO = new StudentDTO(s);
+            sDTO.Degree = new DegreeDTO(s.Degree);
+            sDTO.Proctor = new TeacherDTO(s.Proctor);
+            sDTO.School = new SchoolDTO(s.School);
+            return sDTO;
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult<Student>> UpdateStudent(int id, Student s)
         {
             if (s.StudentId != id || !ModelState.IsValid)
@@ -90,7 +99,7 @@ namespace CollegeManagementApi.Controllers
                 return BadRequest();
             Teacher proctor = await _repo.GetProctorByStudentId(sid);
             if (proctor == null)
-                return NotFound();
+                return NotFound(new { proctorSet = false, message = "proctor is not set for Student id:" + sid }) ;
             return proctor;
         }
 

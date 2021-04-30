@@ -70,10 +70,27 @@ namespace CollegeManagementApi.Services
         {
             if (!StudentExists(student.StudentId))
                 throw new InvalidOperationException($"Student doesnt exist with id {student.StudentId} to update");
+            
+            int sid = student.StudentId;
+            
+            Student entityStudent =await _context.Students.FindAsync(sid);
+            
+            UpdateChangedFeilds(student, entityStudent);
 
-            _context.Entry(student).State = EntityState.Modified;
+            _context.Entry(entityStudent).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
+        }
+        private void UpdateChangedFeilds(Student changed, Student old)
+        {
+            old.DateOfBirth = changed.DateOfBirth;
+            old.DegreeId = changed.DegreeId;
+            old.Emailid = changed.Emailid;
+            old.ImagePath = changed.ImagePath;
+            old.Name = changed.Name;
+            old.Password = changed.Password;
+            old.SchoolId = changed.SchoolId;
+            old.YearOfJoining = changed.YearOfJoining;
         }
         public async Task DeleteStudent(Student student)
         {

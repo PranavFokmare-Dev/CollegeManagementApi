@@ -11,16 +11,21 @@ namespace CollegeManagementApi.Models.DTO
         public string SchoolName { get; set; }
         public string BuildingName { get; set; }
 
-        public string Name { get; set; }
+        public string HodName { get; set; }
         public virtual TeacherDTO Dean { get; set; }
         public virtual TeacherDTO Hod { get; set; }
 
         public SchoolDTO(School school)
         {
-            this.SchoolId = school.SchoolId;
-            this.SchoolName = school.SchoolName;
-            this.BuildingName = school.BuildingName;
-            this.Name = school.Hod.Name;
+            if (school != null)
+            {
+                this.SchoolId = school.SchoolId;
+                this.SchoolName = school.SchoolName;
+                this.BuildingName = school.BuildingName;
+
+            }
+           
+            
         }
     }
 }

@@ -24,9 +24,10 @@ namespace CollegeManagementApi.Controllers
 
         [HttpGet]
         //[ServiceFilter(typeof(LogNormalActionFilter))]
-        public async Task<IEnumerable<School>> GetSchool()
+        public async Task<IEnumerable<SchoolDTO>> GetSchool()
         {
-            return await _repo.GetSchool();
+            IEnumerable<School> schools = await _repo.GetSchool();
+            return schools.Select(s => new SchoolDTO(s));
         }
 
         [HttpGet("{school_id}/Hod/{teacher_id}")]
