@@ -15,7 +15,7 @@ namespace CollegeManagementApi.Services
         Task<IEnumerable<Teacher>> GetTeachers();
         Task<Teacher> GetTeachersByTeacherId(int id);
         Task<IEnumerable<Teacher>> GetTeachersBySchoolId(int id);
-        Task<Teacher> PutTeacher(int id, Teacher teacher);
+        Task PutTeacher(int id, Teacher teacher);
         Task<Teacher> PostTeacher(Teacher teacher);
         Task DeleteTeacher(Teacher teacher);
 
@@ -48,15 +48,11 @@ namespace CollegeManagementApi.Services
             return teachers;
         }
 
-        public async Task<Teacher> PutTeacher(int id, Teacher teacher)
+        public async Task PutTeacher(int id, Teacher teacher)
         {
-
-            Teacher teacher_update = await _context.Teachers.FindAsync(id);
             _context.Entry(teacher).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
-
-            return null;
         }
 
         public async Task<Teacher> PostTeacher(Teacher teacher)
