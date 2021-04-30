@@ -39,7 +39,7 @@ namespace CollegeManagementApi.Controllers
             if (!await checker.StudentExists(sid) || !await checker.RegisterExists(reg_id))
                 return BadRequest($"Check if student id ({sid}) and register id ({reg_id}) are correct");
             await _repo.DeregisterCourseByStudentId(sid, reg_id);
-            return Ok($"Student {sid} deregisterd from {reg_id} ");
+            return Ok();
         }
 
         [HttpGet("{sid}/Enroll/{taughtby_id}")]
