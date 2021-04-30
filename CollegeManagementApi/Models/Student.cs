@@ -31,6 +31,7 @@ namespace CollegeManagementApi.Models
         public int? SchoolId { get; set; }
         [DataMember]
         public string ImagePath { get; set; }
+        [DataMember]
         public string Password { get; set; }
         [DataMember]
         public string Emailid { get; set; }

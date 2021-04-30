@@ -41,7 +41,7 @@ namespace CollegeManagementApi.Services
         public async Task<string> GetPassword(UserDTO user)
         {
             switch (user.Type)
-            {
+            {   
                 case ("student"): return await loginRepository.GetStudentPassword(user.Id);
                 case ("teacher"): return await loginRepository.GetTeacherPassword(user.Id);
                 case ("admin"): return await loginRepository.GetTeacherPassword(user.Id);

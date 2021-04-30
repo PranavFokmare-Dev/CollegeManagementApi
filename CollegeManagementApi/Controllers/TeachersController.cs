@@ -51,22 +51,22 @@ namespace CollegeManagementApi.Controllers
             return await _repo.GetTeachersBySchoolId(sid);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         //[ServiceFilter(typeof(LogNormalActionFilter))]
         public async Task<ActionResult<Teacher>> PutTeacher(int id, Teacher teacher)
         {
-            if (!ModelState.IsValid)
+            if (teacher.TeacherId != id || !ModelState.IsValid)
+                return BadRequest();
+            try
             {
-                return BadRequest(ModelState);
+                await _repo.PutTeacher(id,teacher);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
             }
 
-            Teacher t = await _repo.GetTeachersByTeacherId(id);
-            if (t == null)
-            {
-                return NotFound();
-            }
-
-            return await _repo.PutTeacher(id, teacher);
+            return NoContent();
         }
 
         [HttpPost]
