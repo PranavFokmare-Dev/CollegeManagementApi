@@ -10,5 +10,6 @@ namespace CollegeManagementApi.Models.DTO
         public int TaughtById { get; set; }
         public int CourseId { get; set; }
         public TeacherDTO Teacher { get; set; }
+        public CourseDTO Course { get; set; }
     }
 }

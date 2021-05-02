@@ -2,6 +2,7 @@
 using CollegeManagementApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CollegeManagementApi.Services
@@ -17,6 +18,7 @@ namespace CollegeManagementApi.Services
         Task<bool> TaughtByExists(int id);
         Task<bool> AttendanceExists(int id);
         Task<bool> ProjectMarksExists(int regid);
+        Task<bool> TaughtByExists(int tid, int cid);
     }
     public class ExistenceChecker : IExistenceChecker
     {
@@ -62,6 +64,10 @@ namespace CollegeManagementApi.Services
         public async Task<bool> ProjectMarksExists(int regid)
         {
             return await _context.ProjectMarks.AnyAsync(pm => pm.RegisterdId == regid);
+        }
+        public async Task<bool> TaughtByExists(int tid, int cid)
+        {
+            return await _context.TaughtBies.AnyAsync(tby => tby.TeacherId == tid && tby.CourseId == cid);
         }
     }
 }

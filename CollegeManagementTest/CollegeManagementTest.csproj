@@ -23,4 +23,8 @@
     <ProjectReference Include="..\CollegeManagementApi\CollegeManagementApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
+
 </Project>

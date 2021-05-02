@@ -48,12 +48,12 @@ namespace CollegeManagementApi.Controllers
             if(!await checker.StudentExists(sid) || !await checker.TaughtByExists(taughtby_id))
             {
                 string errorMessage = $"Check if student id ({sid}) and taughtby id ({taughtby_id}) are correct";
-                return BadRequest(errorMessage);
+                return BadRequest(new { registered = false,message=errorMessage }) ;
             }
             if (await checker.RegisterExists(sid, taughtby_id))
-                return Ok("Student already registered that course");
+                return Ok(new { registered = false, message = "Student already registered that course" });
             await _repo.StudentEnrollCourse(sid, taughtby_id);
-            return Ok($"Student with student id: {sid} enrolled in taught by id: {taughtby_id} ");
+            return Ok(new { registered = true, message = $"Student with student id: {sid} enrolled in taught by id: {taughtby_id} " });
         }
 
         [HttpGet("{regid}/Marks")]
