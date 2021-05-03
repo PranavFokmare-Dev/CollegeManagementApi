@@ -19,6 +19,7 @@ namespace CollegeManagementApi.Services
     {
         Task<string> GetStudentPassword(int id);
         Task<string> GetTeacherPassword(int id);
+        Task<string> GetAdminPassword(int id);
     }
     public class LoginService : ILoginService 
     {
@@ -44,7 +45,7 @@ namespace CollegeManagementApi.Services
             {   
                 case ("student"): return await loginRepository.GetStudentPassword(user.Id);
                 case ("teacher"): return await loginRepository.GetTeacherPassword(user.Id);
-                case ("admin"): return await loginRepository.GetTeacherPassword(user.Id);
+                case ("admin"): return await loginRepository.GetAdminPassword(user.Id);
             }
             return null;
         }
@@ -62,6 +63,11 @@ namespace CollegeManagementApi.Services
         public async Task<string> GetTeacherPassword(int id)
         {
             return await context.Teachers.Where(s => s.TeacherId == id).Select(s => s.Password).FirstOrDefaultAsync();
+        }
+        public async Task<string> GetAdminPassword(int id)
+        {
+            int adminDesignationId = await context.Designations.Where(d => d.DesignationName == "admin").Select(d => d.DesignationId).FirstOrDefaultAsync();
+            return await context.Teachers.Where(s => s.TeacherId == id && s.DesignationId == adminDesignationId).Select(s => s.Password).FirstOrDefaultAsync();
         }
     }
 }

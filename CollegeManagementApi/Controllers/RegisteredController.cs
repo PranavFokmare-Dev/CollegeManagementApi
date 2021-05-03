@@ -60,9 +60,9 @@ namespace CollegeManagementApi.Controllers
         public async Task<ActionResult<ProjectMark>> GetMarks(int regid)
         {
             if(! await checker.RegisterExists(regid))
-                return NotFound($"no such registeration of course exists, Registration id:{regid}");
-            if(! await checker.ProjectMarksExists(regid))
-                return NotFound($"Marks for this course has not been yet set,Registration id:{regid}");
+                return NotFound(new {message= $"no such registeration of course exists, Registration id:{regid}" });
+            if (!await checker.ProjectMarksExists(regid))
+                return NotFound(new { marksNotSet = true, message = $"Marks for this course has not been yet set,Registration id:{regid}" }) ;
             return Ok(await _repo.GetProjectMarks(regid));
         }
     }

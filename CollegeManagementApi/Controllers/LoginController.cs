@@ -1,4 +1,5 @@
-﻿using CollegeManagementApi.Models.DTO;
+﻿using CollegeManagementApi.Filter;
+using CollegeManagementApi.Models.DTO;
 using CollegeManagementApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace CollegeManagementApi.Controllers
             this.loginService = loginService;
             this.checker = checker;
         }
+        [ServiceFilter(typeof(LogNormalActionFilter))]
         [HttpPost]
         public async Task<ActionResult> Login(UserDTO user)
         {
