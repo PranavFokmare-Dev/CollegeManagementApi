@@ -15,6 +15,10 @@ namespace CollegeManagementApi.Services
         Task SetDean(int school_id, int teacher_id);
         Task<School> GetHodBySchoolId(int sid);
         Task<School> GetDeanBySchoolId(int sid);
+        Task<School> GetSchoolById(int sid);
+        Task PostSchool(School school);
+        Task UpdateSchool(int id, School school);
+        Task DeleteSchool(School school);
         bool SchoolExists(int id);
         bool TeacherExists(int tid);
 
@@ -34,6 +38,12 @@ namespace CollegeManagementApi.Services
 
             return await _context.Schools.Include(s => s.Hod).Include(s => s.Dean).ToListAsync();
 
+        }
+
+        public async Task<School> GetSchoolById(int sid)
+        {
+            School s = await _context.Schools.Include(s => s.Hod).Include(s => s.Dean).Where(s => s.SchoolId == sid).FirstOrDefaultAsync();
+            return s;
         }
 
         public async Task SetHod(int school_id, int teacher_id)
@@ -75,6 +85,26 @@ namespace CollegeManagementApi.Services
                 return null;
             School s = await _context.Schools.Include(s => s.Dean).Where(s => s.SchoolId == sid).FirstOrDefaultAsync();
             return (s);
+        }
+
+        public async Task UpdateSchool(int id, School school)
+        {
+            _context.Entry(school).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task PostSchool(School school)
+        {
+            await _context.Schools.AddAsync(school);
+            await _context.SaveChangesAsync();
+            
+        }
+
+        public async Task DeleteSchool(School school)
+        {
+            _context.Schools.Remove(school);
+            await _context.SaveChangesAsync();
         }
 
 

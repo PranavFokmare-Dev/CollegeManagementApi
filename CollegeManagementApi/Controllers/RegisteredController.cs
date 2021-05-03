@@ -65,5 +65,48 @@ namespace CollegeManagementApi.Controllers
                 return NotFound(new { marksNotSet = true, message = $"Marks for this course has not been yet set,Registration id:{regid}" }) ;
             return Ok(await _repo.GetProjectMarks(regid));
         }
+
+        [HttpPut("{regid}/Marks")]
+        public async Task<ActionResult<ProjectMark>> UpdateMarks(int regid, ProjectMark mark)
+        {
+            if (mark.RegisterdId != regid || !ModelState.IsValid)
+                return BadRequest();
+            try
+            {
+                await _repo.UpdateMarks(regid, mark);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("{regid}/Marks")]
+        public async Task<ActionResult> AddMarks(ProjectMark mark)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _repo.AddMarks(mark);
+            return Ok();
+        }
+
+
+
+        [HttpGet("StudentList/{tbyd}")]
+        public async Task<ActionResult<IEnumerable<StudentRegisteredDTO>>> GetStudentBytaughtById(int tbyd)
+        {
+
+            if (!await checker.TaughtByExists(tbyd))
+                return NotFound();
+            IEnumerable<StudentRegisteredDTO> students = await _repo.GetStudentByTaughtById(tbyd);
+            return Ok(students);
+        }
+
+
     }
 }
