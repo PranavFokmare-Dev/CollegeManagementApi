@@ -21,7 +21,7 @@ namespace CollegeManagementApi.Controllers
             this.loginService = loginService;
             this.checker = checker;
         }
-        //[ServiceFilter(typeof(LogNormalActionFilter))]
+        [ServiceFilter(typeof(LogNormalActionFilter))]
         [HttpPost]
         public async Task<ActionResult> Login(UserDTO user)
         {
