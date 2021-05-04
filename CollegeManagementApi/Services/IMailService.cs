@@ -34,20 +34,22 @@ namespace CollegeManagementApi.Services
         }
         public string SendMail(string to, string subject, string Body = "")
         {
+            /*
             string userState = "Mail State";
-            MailMessage mailmessage = new MailMessage("college.management.2021@gmail.com", to, subject, Body);
+            MailMessage mailmessage = new MailMessage("YOUR EMAIL ID", to, subject, Body);
             mailmessage.IsBodyHtml = true;
             SmtpClient client = new SmtpClient();
             client.Port = 587;
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("college.management.2021@gmail.com", "i9WNjgrkKp65");
+            client.Credentials = new System.Net.NetworkCredential("YOUR EMAIL ID", "PASSWORD");
             client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
             NetworkCredential _NetworkCredentials = new NetworkCredential("college.management.2021@gmail.com", "i9WNjgrkKp65");
             client.SendAsync(mailmessage, userState);
             return "0";
-        }
+             */
+         }
 
     }
 
