@@ -47,8 +47,9 @@ namespace CollegeManagementApi.Services
             client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
             NetworkCredential _NetworkCredentials = new NetworkCredential("college.management.2021@gmail.com", "i9WNjgrkKp65");
             client.SendAsync(mailmessage, userState);
+            */
             return "0";
-             */
+             
          }
 
     }
