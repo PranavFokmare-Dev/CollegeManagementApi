@@ -18,9 +18,11 @@ namespace CollegeManagementApi.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentRepository _repo;
-        public StudentsController(IStudentRepository _repo)
+        private readonly INotifyUserService notify;
+        public StudentsController(IStudentRepository _repo,INotifyUserService notify)
         {
             this._repo = _repo;
+            this.notify = notify;
         }
 
         //[ServiceFilter(typeof(LogNormalActionFilter))]
@@ -44,6 +46,7 @@ namespace CollegeManagementApi.Controllers
                 //As this Student s was already in the cache it updated it
                 //To see this effect Add breakpoints before and after the _repo.AddStudent(s)
                 //Thats why in the CreatedAtAction we can use s.StudentId 
+                notify.NotifyNewUser(s);
                 return CreatedAtAction("GetStudentById", new { id = s.StudentId }, s);
             }
             else

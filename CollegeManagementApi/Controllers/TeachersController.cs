@@ -16,9 +16,11 @@ namespace CollegeManagementApi.Controllers
     public class TeachersController : ControllerBase
     {
         private readonly ITeacherRepository _repo;
-        public TeachersController(ITeacherRepository _repo)
+        private readonly INotifyUserService notify;
+        public TeachersController(ITeacherRepository _repo,INotifyUserService notify)
         {
             this._repo = _repo;
+            this.notify = notify;
         }
 
         [HttpGet]
@@ -78,7 +80,10 @@ namespace CollegeManagementApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return await _repo.PostTeacher(teacher);
+            Teacher teach = await _repo.PostTeacher(teacher);
+            notify.NotifyNewUser(teach);
+            return teach;
+
         }
         [HttpGet("Delete/{id}")]
         // [ServiceFilter(typeof(LogNormalActionFilter))]

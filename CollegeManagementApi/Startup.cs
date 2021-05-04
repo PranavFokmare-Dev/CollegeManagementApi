@@ -61,7 +61,9 @@ namespace CollegeManagementApi
             services.AddScoped<ITaughtByRepository, TaughtByRepository>();
             services.AddScoped<ISchoolRepository, SchoolRepository>();
             services.AddScoped<IDegreeRepository, DegreeRepository>();
-           
+            services.AddScoped<IMailService, MailService>();
+            services.AddScoped<INotifyUserService, NotifyUserService>();
+
 
 
             services.AddDbContext<CollegeManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
