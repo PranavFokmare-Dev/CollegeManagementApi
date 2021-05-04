@@ -10,8 +10,6 @@ namespace CollegeManagementApi.Models.DTO
         public int SchoolId { get; set; }
         public string SchoolName { get; set; }
         public string BuildingName { get; set; }
-
-        public string HodName { get; set; }
         public virtual TeacherDTO Dean { get; set; }
         public virtual TeacherDTO Hod { get; set; }
 
@@ -22,7 +20,6 @@ namespace CollegeManagementApi.Models.DTO
                 this.SchoolId = school.SchoolId;
                 this.SchoolName = school.SchoolName;
                 this.BuildingName = school.BuildingName;
-
             }
            
             

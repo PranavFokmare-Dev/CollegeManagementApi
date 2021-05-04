@@ -11,9 +11,12 @@ namespace CollegeManagementApi.Services
     public interface IRegisterRepository
     {
         Task<IEnumerable<RegisteredDTO>> GetCoursesByStudentId(int sid);
+        Task<IEnumerable<StudentRegisteredDTO>> GetStudentByTaughtById(int tbyd);
         Task DeregisterCourseByStudentId(int sid, int regid);
         Task StudentEnrollCourse(int sid, int taughtby_id);
         Task<ProjectMark> GetProjectMarks(int regid);
+        Task UpdateMarks(int regid, ProjectMark mark);
+        Task AddMarks(ProjectMark mark);
     }
     public class RegisterRepository:IRegisterRepository
     {
@@ -27,14 +30,13 @@ namespace CollegeManagementApi.Services
         public async Task<IEnumerable<RegisteredDTO>> GetCoursesByStudentId(int sid)
         {
 
-
             IEnumerable<Registerd> registeredCoursesOfStudent = await _context.Registerds.Where(reg => reg.StudentId == sid).ToListAsync();
             IEnumerable<TaughtBy> taughtBies = await _context.TaughtBies.Include(t => t.Course).Include(t => t.Teacher).ToListAsync();
             return registeredCoursesOfStudent.Join(taughtBies,
                 reg=>reg.TaughtById,
                 tby=>tby.TaughtById,
                 (reg,tby)=>new RegisteredDTO() 
-                { course = new CourseDTO(tby.Course),
+                {   course = new CourseDTO(tby.Course),
                     teacher = new TeacherDTO(tby.Teacher),
                     RegisterdId = reg.RegisterdId
                 });
@@ -61,6 +63,36 @@ namespace CollegeManagementApi.Services
         {
             ProjectMark marks = await _context.ProjectMarks.FindAsync(regid);
             return marks;
+        }
+
+        public async Task  UpdateMarks(int regid, ProjectMark mark)
+        {
+            _context.Entry(mark).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddMarks(ProjectMark mark)
+        {
+            await _context.ProjectMarks.AddAsync(mark);
+            await _context.SaveChangesAsync();
+        }
+
+
+
+        public async Task<IEnumerable<StudentRegisteredDTO>> GetStudentByTaughtById(int tbyd)
+        {
+            IEnumerable<Registerd> reg = await _context.Registerds.Include(r => r.Student).Where(r => r.TaughtById == tbyd).ToListAsync();
+
+            IEnumerable<StudentRegisteredDTO> studentRegisteredDTOs= reg.Select(
+                s => new StudentRegisteredDTO()
+                {
+                    RegisterdId = s.RegisterdId,
+                    student = new StudentDTO(s.Student),
+                });
+
+            return studentRegisteredDTOs;
+
         }
     }
 }

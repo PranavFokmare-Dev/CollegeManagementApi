@@ -24,10 +24,26 @@ namespace CollegeManagementApi.Controllers
 
         [HttpGet]
         //[ServiceFilter(typeof(LogNormalActionFilter))]
-        public async Task<IEnumerable<SchoolDTO>> GetSchool()
+        public async Task<IEnumerable<School>> GetSchool()
         {
-            IEnumerable<School> schools = await _repo.GetSchool();
-            return schools.Select(s => new SchoolDTO(s));
+            
+            return await _repo.GetSchool();
+        }
+
+        [HttpGet("{sid}")]
+        //[ServiceFilter(typeof(LogNormalActionFilter))]
+        public async Task<ActionResult<School>> GetSchoolById(int sid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            School s = await _repo.GetSchoolById(sid);
+            if (s == null)
+            {
+                return NotFound();
+            }
+            return await _repo.GetSchoolById(sid);
         }
 
         [HttpGet("{school_id}/Hod/{teacher_id}")]
@@ -77,6 +93,55 @@ namespace CollegeManagementApi.Controllers
             if (school == null)
                 return NotFound();
             return school;
+        }
+
+        [HttpPut("{id}")]
+        //[ServiceFilter(typeof(LogNormalActionFilter))]
+        public async Task<ActionResult<School>> PutSchool(int id, School school)
+        {
+            if (school.SchoolId != id || !ModelState.IsValid)
+                return BadRequest();
+            try
+            {
+                await _repo.UpdateSchool(id, school);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        // [ServiceFilter(typeof(LogNormalActionFilter))]
+        public async Task<ActionResult> PostSchool(School school)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _repo.PostSchool(school);
+            return Ok();
+        }
+
+        [HttpGet("Delete/{sid}")]
+        // [ServiceFilter(typeof(LogNormalActionFilter))]
+        public async Task<ActionResult<School>> DeleteSchool(int sid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            School delete_school = await _repo.GetSchoolById(sid);
+            if (delete_school == null)
+            {
+                return NotFound();
+            }
+            await _repo.DeleteSchool(delete_school);
+            return delete_school;
         }
 
 

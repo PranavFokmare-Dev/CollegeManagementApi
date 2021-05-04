@@ -16,6 +16,7 @@ namespace CollegeManagementApi.Models
             Teachers = new HashSet<Teacher>();
         }
 
+        [DataMember]
         public int SchoolId { get; set; }
         [DataMember]
         public string SchoolName { get; set; }
