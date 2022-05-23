@@ -1,5 +1,5 @@
 # CollegeManagementApi
-final repository
+.net core api to manage courses, attendance tests etc.
 <h1>Some Points to Note</h1>
 <h5>We have added a mailing service but you need to add the password and mail id to make it work. you would need to follow the steps in this link.<br>https://www.c-sharpcorner.com/blogs/smtp-server-requires-a-secure-connection1</h5>
 <h5>Changes to make it work:</h5>
